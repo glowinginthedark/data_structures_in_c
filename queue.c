@@ -14,8 +14,8 @@ struct Q
 {
     /** 
      * Keep track of head and tail at the same time.
-     * Reduces time complexity since we push from one
-     * side and pop from the other.
+     * Reduces time complexity since we enqueue from one
+     * side and dequeue from the other.
      */
     struct Qnode* tail;
     struct Qnode* head;
@@ -31,8 +31,8 @@ struct Qnode
 struct Qnode* createNewNode(int data);
 struct Q* createNewQ(struct Qnode* firstNode);
 struct Q* createQueue(int firstData);
-void push(struct Q* q, int newData);
-int pop(struct Q* q);
+void enqueue(struct Q* q, int newData);
+int dequeue(struct Q* q);
 int peek(struct Q* q);
 int deleteQueue(struct Q* q);
 void printQueue(struct Q* q);
@@ -96,7 +96,7 @@ struct Q* createQueue(int firstData)
  * @param q struct Q*
  * @param newData int
  */
-void push(struct Q* q, int newData)
+void enqueue(struct Q* q, int newData)
 {
     printf("+ %d\n", newData);
 
@@ -112,19 +112,19 @@ void push(struct Q* q, int newData)
 }
 
 /**
- * @brief Pop the first in line using the head ptr
+ * @brief Dequeue the first in line using the head ptr
  * 
  * @param q struct Q*
  * @return int 
  */
-int pop(struct Q* q)
+int dequeue(struct Q* q)
 {
     // Hold ptr to next_in_q
     struct Qnode* next = q->head->next_in_q;
 
     // Store pop data to return it
     int temp = q->head->data;
-    printf("Popping %d from front of queue.\n", temp);
+    printf("Removing %d from front of queue.\n", temp);
 
     // Free memory for the popped Qnode
     free(q->head);
@@ -199,14 +199,14 @@ void printQueue(struct Q* q)
 int main()
 {
     struct Q* myQueue = createQueue(13);
-    push(myQueue, 15);
+    enqueue(myQueue, 15);
     peek(myQueue);
-    push(myQueue, 17);
-    pop(myQueue);
-    push(myQueue, 69);
-    push(myQueue, 888);
-    push(myQueue, 374);
-    push(myQueue, 2);
+    enqueue(myQueue, 17);
+    dequeue(myQueue);
+    enqueue(myQueue, 69);
+    enqueue(myQueue, 888);
+    enqueue(myQueue, 374);
+    enqueue(myQueue, 2);
     deleteQueue(myQueue);
 
     return 0;
